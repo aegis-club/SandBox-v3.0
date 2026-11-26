@@ -29,17 +29,26 @@ function Lockup({ id, ground }: { id: string; ground: (typeof GROUNDS)[number] }
   );
 }
 
+const GROUPS = [
+  { id: "letters", title: "Letter marks", text: "Letters carved from boxes, in the wordmark's grammar." },
+  { id: "symbols", title: "Symbols", text: "Pictures, not letters. Each uses the same parts: square boxes, carves, ink on yellow." },
+] as const;
+
 function Lab() {
   return (
     <main className="lab">
       <header className="lab-head">
         <h1>SandBox logo lab</h1>
-        <p>Five marks in the wordmark's carve grammar. Each row shows the mark at favicon, header and poster sizes, on the three grounds, and as a header lockup with the carved wordmark.</p>
+        <p>Each row shows a mark at favicon, header and poster sizes, on the three grounds, and as a header lockup with the carved wordmark.</p>
       </header>
-      {MARKS.map((m) => (
+      {GROUPS.map((g) => (
+        <div key={g.id} className="lab-group">
+          <h2 className="lab-group__title">{g.title}</h2>
+          <p className="lab-group__text">{g.text}</p>
+          {MARKS.filter((m) => m.group === g.id).map((m) => (
         <section key={m.id} className="lab-row" aria-labelledby={`m-${m.id}`}>
           <div className="lab-row__text">
-            <h2 id={`m-${m.id}`}>{m.name}</h2>
+            <h3 id={`m-${m.id}`}>{m.name}</h3>
             <p>{m.idea}</p>
           </div>
           <div className="lab-grounds">
@@ -62,6 +71,8 @@ function Lab() {
           <Lockup id={m.id} ground={GROUNDS[0]} />
           <Lockup id={m.id} ground={GROUNDS[1]} />
         </section>
+          ))}
+        </div>
       ))}
     </main>
   );

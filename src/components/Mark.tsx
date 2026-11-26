@@ -1,26 +1,70 @@
-/* The SB3 monogram: S, B and 3 carved from three boxes in a 2 by 2 grid.
-   The fourth cell stays empty, an open slot in the sandbox.
-   `fg` is the box colour and `bg` the carve colour (the ground behind the mark). */
+import type { ReactElement } from "react";
 
-type Props = { fg?: string; bg?: string; size?: number | string; className?: string; title?: string };
+/* SandBox monograms. Each letter is a 47 by 47 box with carves cut from it,
+   in the grammar of the SANDBOX wordmark. `fg` is the box colour and `bg`
+   the carve colour (the ground behind the mark). Cells sit on a 100 by 100
+   grid with a 6 unit gap. */
 
-export const SB3_CELLS = (fg: string, bg: string) => (
+type Cell = (fg: string, bg: string) => ReactElement;
+
+const S: Cell = (fg, bg) => (
   <>
-    {/* S */}
-    <rect x="0" y="0" width="47" height="47" fill={fg} />
+    <rect width="47" height="47" fill={fg} />
     <path d="M48 9H21a5 5 0 0 0 0 10h27Z" fill={bg} />
     <path d="M-1 28h27a5 5 0 0 1 0 10H-1Z" fill={bg} />
-    {/* B */}
-    <rect x="53" y="0" width="47" height="47" fill={fg} />
-    <path d="M101 19.5 93 23.5l8 4Z" fill={bg} />
-    <path d="M65 8h10a4.5 4.5 0 0 1 0 9H65Z" fill={bg} />
-    <path d="M65 30h11a4.5 4.5 0 0 1 0 9H65Z" fill={bg} />
-    {/* 3 */}
-    <rect x="0" y="53" width="47" height="47" fill={fg} />
-    <path d="M-1 62h27a5 5 0 0 1 0 10H-1Z" fill={bg} />
-    <path d="M-1 81h27a5 5 0 0 1 0 10H-1Z" fill={bg} />
   </>
 );
+
+const B: Cell = (fg, bg) => (
+  <>
+    <rect width="47" height="47" fill={fg} />
+    <path d="M48 19.5 40 23.5l8 4Z" fill={bg} />
+    <path d="M12 8h10a4.5 4.5 0 0 1 0 9H12Z" fill={bg} />
+    <path d="M12 30h11a4.5 4.5 0 0 1 0 9H12Z" fill={bg} />
+  </>
+);
+
+const V: Cell = (fg, bg) => (
+  <>
+    <rect width="47" height="47" fill={fg} />
+    <path d="M11-1h25L23.5 33Z" fill={bg} />
+    <path d="M-1 9v39h17Z" fill={bg} />
+    <path d="M48 9v39H31Z" fill={bg} />
+  </>
+);
+
+const THREE: Cell = (fg, bg) => (
+  <>
+    <rect width="47" height="47" fill={fg} />
+    <path d="M-1 9h27a5 5 0 0 1 0 10H-1Z" fill={bg} />
+    <path d="M-1 28h27a5 5 0 0 1 0 10H-1Z" fill={bg} />
+  </>
+);
+
+const at = (x: number, y: number, cell: Cell, fg: string, bg: string) => (
+  <g transform={`translate(${x} ${y})`}>{cell(fg, bg)}</g>
+);
+
+/* The earlier three-box version, kept for the logo lab. */
+export const SB3_CELLS = (fg: string, bg: string) => (
+  <>
+    {at(0, 0, S, fg, bg)}
+    {at(53, 0, B, fg, bg)}
+    {at(0, 53, THREE, fg, bg)}
+  </>
+);
+
+/* SBv3: S B on top, v 3 below. */
+export const SBV3_CELLS = (fg: string, bg: string) => (
+  <>
+    {at(0, 0, S, fg, bg)}
+    {at(53, 0, B, fg, bg)}
+    {at(0, 53, V, fg, bg)}
+    {at(53, 53, THREE, fg, bg)}
+  </>
+);
+
+type Props = { fg?: string; bg?: string; size?: number | string; className?: string; title?: string };
 
 export function Mark({ fg = "var(--ink)", bg = "var(--y)", size = 28, className, title }: Props) {
   return (
@@ -34,7 +78,10 @@ export function Mark({ fg = "var(--ink)", bg = "var(--y)", size = 28, className,
       aria-hidden={title ? undefined : true}
       focusable="false"
     >
-      {SB3_CELLS(fg, bg)}
+      <clipPath id="mark-clip">
+        <rect width="100" height="100" />
+      </clipPath>
+      <g clipPath="url(#mark-clip)">{SBV3_CELLS(fg, bg)}</g>
     </svg>
   );
 }
