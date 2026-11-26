@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "ship": "npm run build && git push origin main && vercel deploy --prod --yes"
   },
   "dependencies": {
     "@fontsource-variable/archivo": "^5.3.0",
