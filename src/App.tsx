@@ -10,6 +10,7 @@ import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
 import { Journey } from "./components/Journey";
 import { LiveOps } from "./components/LiveOps";
+import { PalettePick } from "./components/PalettePick";
 import { Loop } from "./components/Loop";
 import { Register } from "./components/Register";
 import { Rules } from "./components/Rules";
@@ -47,6 +48,7 @@ export default function App() {
         <Register />
       </main>
       <Close />
+      <PalettePick />
       </ClockProvider>
     </MotionConfig>
   );

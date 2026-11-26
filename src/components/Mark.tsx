@@ -66,7 +66,7 @@ export const SBV3_CELLS = (fg: string, bg: string) => (
 
 type Props = { fg?: string; bg?: string; size?: number | string; className?: string; title?: string };
 
-export function Mark({ fg = "var(--ink)", bg = "var(--y)", size = 28, className, title }: Props) {
+export function Mark({ fg = "var(--ink)", bg = "var(--field)", size = 28, className, title }: Props) {
   return (
     <svg
       className={className}

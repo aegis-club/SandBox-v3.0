@@ -7,6 +7,12 @@
   --paper: #fffef8;
   --white: #ffffff;
   --on-y-2: #473c00;
+  /* Role tokens. The field is the page ground; --y is the yellow accent.
+     In the signal palette they match. Other palettes split them. */
+  --field: var(--y);
+  --strip-light: var(--white);
+  --hot: var(--y);
+  --grid-rgb: 255 255 255;
   --on-ink-2: #cfc8a8;
   --on-paper-2: #4d4a3e;
 
@@ -24,12 +30,12 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; scrollbar-color: var(--ink) var(--y); }
+html { -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; scrollbar-color: var(--ink) var(--field); }
 [id] { scroll-margin-top: var(--header-h); }
 html.is-locked { overflow: hidden; }
 body {
   margin: 0;
-  background: var(--y);
+  background: var(--field);
   color: var(--ink);
   font-family: var(--sans);
   font-size: 1.0625rem;
@@ -55,10 +61,10 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 @media (min-width: 60rem) { :root { --cell: calc((100vw - 2 * var(--pad)) / 12); --grid-a: 0.42; } }
 
 .grid-field {
-  background-color: var(--y);
+  background-color: var(--field);
   background-image:
-    linear-gradient(to right, rgba(255, 255, 255, var(--grid-a)) 1.5px, transparent 1.5px),
-    linear-gradient(to bottom, rgba(255, 255, 255, var(--grid-a)) 1.5px, transparent 1.5px);
+    linear-gradient(to right, rgb(var(--grid-rgb) / var(--grid-a)) 1.5px, transparent 1.5px),
+    linear-gradient(to bottom, rgb(var(--grid-rgb) / var(--grid-a)) 1.5px, transparent 1.5px);
   background-size: var(--cell) var(--cell);
   background-position: var(--pad) var(--header-h);
 }
@@ -137,10 +143,10 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   align-items: center;
   gap: 1.5rem;
   padding-inline: var(--pad);
-  background: var(--y);
+  background: var(--field);
   border-bottom: 2px solid var(--ink);
 }
-.brand { --fg: var(--ink); --bg: var(--y); display: inline-flex; align-items: center; gap: 0.55rem; text-decoration: none; }
+.brand { --fg: var(--ink); --bg: var(--field); display: inline-flex; align-items: center; gap: 0.55rem; text-decoration: none; }
 .brand__mark { flex: none; width: 1.75rem; height: 1.75rem; }
 .brand .wm { height: 1.125rem; width: calc(1.125rem * 6.36); }
 .brand em { font-style: normal; font-family: var(--mono); font-weight: 600; font-size: 0.72rem; letter-spacing: 0; }
@@ -169,7 +175,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   .menu-btn, .menu { display: none; }
 }
 .live-chip { display: inline-flex; align-items: center; gap: 0.45rem; height: 2.25rem; padding: 0 0.7rem; background: var(--ink); color: var(--y); font-weight: 800; font-stretch: 112%; font-size: 0.8125rem; text-transform: uppercase; text-decoration: none; white-space: nowrap; }
-.live-chip i { width: 0.55rem; height: 0.55rem; background: var(--y); animation: blink 1s steps(2, start) infinite; }
+.live-chip i { width: 0.55rem; height: 0.55rem; background: var(--hot); animation: blink 1s steps(2, start) infinite; }
 .live-chip span { font-family: var(--mono); font-weight: 600; text-transform: none; }
 .header .live-chip { margin-left: auto; }
 .header .live-chip + .btn { margin-left: 0; }
@@ -194,7 +200,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 .strips { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(8px, 1.5svh, 16px); }
 .strip { display: flex; height: var(--strip-h); margin-inline: var(--pad); }
-.strip--paper { --bg: var(--white); --fg: var(--ink); }
+.strip--paper { --bg: var(--strip-light); --fg: var(--ink); }
 .strip--ink { --bg: var(--ink); --fg: var(--white); }
 .strip--yellow { --bg: var(--y); --fg: var(--ink); }
 .strip__fringe { flex: none; width: clamp(8px, 1.5vw, 24px); background: repeating-linear-gradient(to bottom, var(--fg) 0 2px, transparent 2px 5px); }
@@ -329,7 +335,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 
 /* ---- Journey ---- */
 .journey { display: grid; gap: 1rem; }
-.leg { padding: clamp(1.1rem, 2vw, 1.75rem); box-shadow: inset 0 0 0 2px var(--ink); background: var(--y); }
+.leg { padding: clamp(1.1rem, 2vw, 1.75rem); box-shadow: inset 0 0 0 2px var(--ink); background: var(--field); }
 .leg--inside { background: var(--ink); color: var(--paper); }
 .leg__head { display: flex; justify-content: space-between; gap: 1rem; white-space: nowrap; font-weight: 800; font-stretch: 125%; font-size: clamp(0.6875rem, 3.1vw, 0.8125rem); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 1.25rem; }
 .leg--inside .leg__head { color: var(--y); }
@@ -388,7 +394,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .vmap__rail { fill: none; stroke: var(--wb-tertiary); stroke-width: 1.4; stroke-dasharray: 6 4; }
 .vmap__mid { fill: none; stroke: var(--wb-secondary); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 .vmap__major { fill: none; stroke: var(--wb-motorway); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
-.vmap__campus { fill: rgba(255, 212, 0, 0.45); stroke: var(--wb-motorway); stroke-width: 1.5; }
+.vmap__campus { fill: color-mix(in srgb, var(--y) 45%, transparent); stroke: var(--wb-motorway); stroke-width: 1.5; }
 .vmap__ring circle { fill: none; stroke: var(--wb-text); stroke-width: 1.2; stroke-dasharray: 2 6; opacity: 0.6; }
 .vmap__ring text { fill: var(--wb-text); font-family: var(--mono); font-size: 24px; font-weight: 600; paint-order: stroke; stroke: var(--wb-bg); stroke-width: 8px; }
 .vmap__pin rect { fill: var(--ink); }
@@ -509,12 +515,12 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .board { display: grid; gap: 1.25rem; }
 .board__clock { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; padding: clamp(1rem, 2.4vw, 1.75rem); background: var(--ink); color: var(--y); }
 .board__clock .roll { font-weight: 900; font-stretch: 125%; font-size: clamp(2.4rem, 11.5vw, 7.5rem); letter-spacing: -0.02em; flex-basis: 100%; }
-.board__dot { width: 0.8rem; height: 0.8rem; background: var(--y); animation: blink 1s steps(2, start) infinite; }
+.board__dot { width: 0.8rem; height: 0.8rem; background: var(--hot); animation: blink 1s steps(2, start) infinite; }
 .board__label { font-weight: 800; font-stretch: 125%; text-transform: uppercase; font-size: 0.8125rem; letter-spacing: 0.08em; }
 .hours { display: grid; grid-template-columns: repeat(24, minmax(0, 1fr)); gap: 3px; }
 .hours li { height: clamp(1.25rem, 3vw, 2.25rem); box-shadow: inset 0 0 0 2px var(--ink); }
 .hours li.is-past { background: var(--ink); }
-.hours li.is-now { background: var(--y); animation: pulse 1.6s var(--out) infinite; }
+.hours li.is-now { background: var(--hot); animation: pulse 1.6s var(--out) infinite; }
 @keyframes pulse { 50% { background: var(--ink); } }
 .hours__phases { display: grid; grid-template-columns: repeat(24, minmax(0, 1fr)); gap: 3px; margin-top: -0.6rem; }
 .hours__phases li { overflow: hidden; padding-top: 0.45rem; border-top: 2px solid var(--ink); font-weight: 700; font-size: 0.75rem; white-space: nowrap; text-overflow: ellipsis; color: var(--on-paper-2); }
@@ -580,17 +586,17 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   aspect-ratio: 4 / 3;
   display: grid;
   place-items: center;
-  background-color: #1f1c12;
-  background-image: repeating-linear-gradient(135deg, #2c281a 0 2px, transparent 2px 12px);
+  background-color: color-mix(in srgb, var(--ink) 88%, var(--paper));
+  background-image: repeating-linear-gradient(135deg, color-mix(in srgb, var(--ink) 78%, var(--paper)) 0 2px, transparent 2px 12px);
   color: var(--on-ink-2);
 }
 .frame__ph svg { width: 2.75rem; height: 2.75rem; }
-.frame__ph rect { fill: #3d3823; }
-.frame__ph ellipse { fill: #1f1c12; }
+.frame__ph rect { fill: var(--ink-line); }
+.frame__ph ellipse { fill: color-mix(in srgb, var(--ink) 88%, var(--paper)); }
 .frame__no { position: absolute; left: 0.75rem; top: 0.6rem; font-family: var(--mono); font-size: 0.75rem; font-weight: 600; color: var(--y); }
 .frame__tag { position: absolute; right: 0.75rem; bottom: 0.6rem; font-weight: 800; font-stretch: 112%; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.08em; }
 .frame__cap { padding-top: 0.6rem; color: var(--paper); font-weight: 700; font-size: 0.9375rem; }
-@media (hover: hover) { .frame__ph { transition: background-color 0.3s; } .frame:hover .frame__ph { background-color: #2a2617; } .frame:hover .frame__ph rect { fill: var(--y); } }
+@media (hover: hover) { .frame__ph { transition: background-color 0.3s; } .frame:hover .frame__ph { background-color: color-mix(in srgb, var(--ink) 80%, var(--paper)); } .frame:hover .frame__ph rect { fill: var(--y); } }
 @media (max-width: 24rem) {
   .brand { gap: 0.4rem; }
   .brand__mark { width: 1.5rem; height: 1.5rem; }
@@ -598,3 +604,59 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   .header .btn--sm { padding: 0 0.65rem; font-size: 0.8125rem; }
 }
 @media (max-width: 21.5rem) { .brand .wm { display: none; } }
+
+/* ---- Palette exploration (local only) -------------------------------------
+   Each palette keeps yellow and pairs it with a complementary or contrasting
+   dark. The field softens to a pale yellow, so yellow becomes an accent in a
+   family of yellows instead of a flood. Switch with ?palette=<id>. */
+html[data-palette="honey"] {
+  --field: #fff1c4;
+  --y: #ffc72c;
+  --ink: #1b1838;
+  --ink-line: #34305c;
+  --paper: #fffaf0;
+  --white: #fffdf7;
+  --strip-light: var(--y);
+  --on-y-2: #57460f;
+  --on-ink-2: #c9c5ec;
+  --on-paper-2: #4a4766;
+  --grid-rgb: 27 24 56;
+  --hot: #8b7dff;
+}
+html[data-palette="marigold"] {
+  --field: #fdeccb;
+  --y: #f8b131;
+  --ink: #2b1433;
+  --ink-line: #4b2e55;
+  --paper: #fffaf2;
+  --white: #fffcf5;
+  --strip-light: var(--y);
+  --on-y-2: #5a3b0c;
+  --on-ink-2: #e4d1e6;
+  --on-paper-2: #574457;
+  --grid-rgb: 43 20 51;
+  --hot: #ef5b3c;
+}
+html[data-palette="citrus"] {
+  --field: #f7f4d4;
+  --y: #f4d23e;
+  --ink: #0d2b33;
+  --ink-line: #24474f;
+  --paper: #fdfcf3;
+  --white: #fffef9;
+  --strip-light: var(--y);
+  --on-y-2: #4c4710;
+  --on-ink-2: #bcd7da;
+  --on-paper-2: #3f5257;
+  --grid-rgb: 13 43 51;
+  --hot: #2bb3a3;
+}
+html[data-palette]:not([data-palette="signal"]) .grid-field { --grid-a: 0.07; }
+
+.palette-pick { position: fixed; left: 0.75rem; bottom: calc(0.75rem + env(safe-area-inset-bottom)); z-index: 60; display: flex; align-items: center; gap: 0.35rem; padding: 0.35rem; background: var(--paper); box-shadow: 0 0 0 2px var(--ink), 0 8px 24px rgb(0 0 0 / 0.18); }
+.palette-pick__label { padding-inline: 0.4rem 0.2rem; font-weight: 800; font-stretch: 112%; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink); }
+.palette-pick button { display: flex; align-items: center; gap: 0.4rem; min-height: 2.5rem; padding: 0 0.6rem 0 0.4rem; font-weight: 700; font-size: 0.8125rem; color: var(--ink); touch-action: manipulation; }
+.palette-pick button[aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--ink); }
+.palette-pick__sw { display: inline-grid; grid-template-columns: 1fr 1fr; width: 1.5rem; height: 1.5rem; flex: none; box-shadow: 0 0 0 1px rgb(0 0 0 / 0.25); }
+.palette-pick__sw i:nth-child(3) { grid-column: 1 / -1; }
+@media (max-width: 40rem) { .palette-pick button span:last-child { display: none; } .palette-pick__label { display: none; } }
