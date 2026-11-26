@@ -1,10 +1,12 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { NAV } from "../data";
+import { hplus, START, useClock } from "./Clock";
 import { EASE } from "./Reveal";
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const { now, stage } = useClock();
 
   useEffect(() => {
     document.documentElement.classList.toggle("is-locked", open);
@@ -32,6 +34,20 @@ export function Header() {
             </a>
           ))}
         </nav>
+        <AnimatePresence>
+          {stage === "live" && (
+            <motion.a
+              className="live-chip"
+              href="#live"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+            >
+              <i aria-hidden="true" />
+              Live <span>{hplus(now - START).slice(0, 7)}</span>
+            </motion.a>
+          )}
+        </AnimatePresence>
         <a className="btn btn--ink btn--sm" href="#register">
           Request entry
         </a>

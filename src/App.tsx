@@ -2,11 +2,14 @@ import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 import { MotionConfig } from "motion/react";
 import { useEffect } from "react";
+import { Archive } from "./components/Archive";
+import { ClockProvider } from "./components/Clock";
 import { Close } from "./components/Close";
 import { Faq } from "./components/Faq";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
 import { Journey } from "./components/Journey";
+import { LiveOps } from "./components/LiveOps";
 import { Loop } from "./components/Loop";
 import { Register } from "./components/Register";
 import { Rules } from "./components/Rules";
@@ -24,6 +27,7 @@ export default function App() {
 
   return (
     <MotionConfig reducedMotion="user">
+      <ClockProvider>
       <a className="skip" href="#main">
         Skip to content
       </a>
@@ -34,13 +38,16 @@ export default function App() {
         <Tape />
         <Territories />
         <Journey />
+        <LiveOps />
         <Rules />
+        <Archive />
         <Venue />
         <Faq />
         <Sponsors />
         <Register />
       </main>
       <Close />
+      </ClockProvider>
     </MotionConfig>
   );
 }

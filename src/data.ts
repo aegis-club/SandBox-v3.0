@@ -3,6 +3,8 @@ export const TBA = "To be announced";
 export const NAV = [
   { href: "#territories", label: "Territories" },
   { href: "#journey", label: "Journey" },
+  { href: "#live", label: "Live" },
+  { href: "#archive", label: "Archive" },
   { href: "#venue", label: "Venue" },
   { href: "#faq", label: "FAQ" },
   { href: "#sponsors", label: "Sponsors" },
@@ -108,3 +110,60 @@ export const TAPE = [
 export const MLH = "https://mlh.io/code-of-conduct";
 export const DIRECTIONS =
   "https://www.google.com/maps/dir/?api=1&destination=Dayananda%20Sagar%20College%20of%20Engineering%2C%20Bengaluru";
+
+/* ---- Sample data -------------------------------------------------------
+   Everything below is placeholder content. Replace it with real details
+   before launch. The site labels each sample block as a sample. */
+
+export const EVENT = {
+  start: "2027-03-13T09:00:00+05:30",
+  hours: 24,
+  sample: true,
+};
+
+export const LIVE_PHASES = [
+  { n: "04", name: "Hackathon begins", code: "Hour zero", from: 0, to: 1 },
+  { n: "05", name: "Development sessions", code: "Deep build", from: 1, to: 12 },
+  { n: "06", name: "Mentoring rounds", code: "Signal boost", from: 12, to: 18 },
+  { n: "07", name: "Judging", code: "Stress test", from: 18, to: 24 },
+];
+
+/* `at` is hours after hour zero. */
+export const ANNOUNCEMENTS = [
+  { at: 0, text: "Hour zero. The sandbox is sealed. Build well." },
+  { at: 0.5, text: "Wi-Fi details are on the help desk board." },
+  { at: 2, text: "Mentors are on the floor. Raise your team card to call one." },
+  { at: 4, text: "Dinner is served in the main hall until 22:00." },
+  { at: 6.5, text: "Quiet room is open on the second floor." },
+  { at: 9, text: "Midnight snack run. Collect at the help desk." },
+  { at: 12, text: "Mentoring rounds begin. Check your slot on the board." },
+  { at: 18, text: "Judging starts. Keep your demo under five minutes." },
+  { at: 23, text: "One hour left. Push your final build." },
+];
+
+export const EDITIONS = [
+  {
+    n: "01",
+    name: "SandBox v1.0",
+    year: "Year to be confirmed",
+    line: "The first edition. One room, one night, one question: what breaks first?",
+    stats: [
+      { k: "Teams", v: "40" },
+      { k: "Hours", v: "24" },
+      { k: "Tracks", v: "05" },
+    ],
+    frames: ["Opening ceremony", "Hour zero", "Mentor rounds", "Midnight build", "Final demos", "Winners"],
+  },
+  {
+    n: "02",
+    name: "SandBox v2.0",
+    year: "2026",
+    line: "The second edition grew the floor, the tracks and the number of things broken on purpose.",
+    stats: [
+      { k: "Teams", v: "75" },
+      { k: "Hours", v: "24" },
+      { k: "Tracks", v: "08" },
+    ],
+    frames: ["Registration desk", "Team huddle", "Sponsor booths", "3 a.m. debugging", "Judging panel", "Closing ceremony"],
+  },
+];
