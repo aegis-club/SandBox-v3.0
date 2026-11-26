@@ -7,7 +7,7 @@ export default defineConfig({
   server: { port: 5173, strictPort: false },
   build: {
     rollupOptions: {
-      input: { main: resolve(__dirname, "index.html"), lab: resolve(__dirname, "logo-lab.html") },
+      input: { main: resolve(import.meta.dirname, "index.html"), lab: resolve(import.meta.dirname, "logo-lab.html") },
     },
   },
 });

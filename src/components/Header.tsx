@@ -2,6 +2,8 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { NAV } from "../data";
 import { hplus, START, useClock } from "./Clock";
+import { Mark } from "./Mark";
+import { Wordmark } from "./Wordmark";
 import { EASE } from "./Reveal";
 
 export function Header() {
@@ -19,13 +21,9 @@ export function Header() {
     <>
       <header className="header">
         <a className="brand" href="#top" aria-label="SandBox v3.0, back to top">
-          <svg viewBox="0 0 20 20" aria-hidden="true">
-            <rect width="20" height="20" />
-            <ellipse cx="10" cy="10" rx="3.2" ry="6.4" transform="rotate(32 10 10)" />
-          </svg>
-          <span>
-            SandBox <em>v3.0</em>
-          </span>
+          <Mark className="brand__mark" />
+          <Wordmark className="brand__wm" />
+          <em>v3.0</em>
         </a>
         <nav className="nav" aria-label="Sections">
           {NAV.map((n) => (

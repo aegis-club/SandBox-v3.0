@@ -1,4 +1,5 @@
 import type { ReactElement } from "react";
+import { SB3_CELLS } from "../components/Mark";
 
 /* Candidate SandBox marks. Each mark is a sealed box with carves cut from it,
    drawn in the same grammar as the SANDBOX wordmark. `fg` is the box colour,
@@ -9,6 +10,17 @@ type MarkProps = { fg: string; bg: string; size: number; title?: string };
 export type Mark = { id: string; name: string; idea: string; draw: (fg: string, bg: string) => ReactElement };
 
 export const MARKS: Mark[] = [
+  {
+    id: "sb3",
+    name: "F · SB3 (chosen)",
+    idea: "S, B and 3 carved from three boxes in a 2 by 2 grid. The fourth cell stays open.",
+    draw: (fg, bg) => (
+      <>
+        <rect width="100" height="100" fill={bg} />
+        {SB3_CELLS(fg, bg)}
+      </>
+    ),
+  },
   {
     id: "o",
     name: "A · The O (current)",
