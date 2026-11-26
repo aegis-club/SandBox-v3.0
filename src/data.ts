@@ -108,6 +108,9 @@ export const TAPE = [
 ];
 
 export const MLH = "https://mlh.io/code-of-conduct";
+export const PLACE = "Dayananda Sagar College of Engineering, Bengaluru";
+export const GMAP_EMBED = `https://www.google.com/maps/embed?origin=mfe&pb=!1m3!2m1!1s${encodeURIComponent(PLACE).replace(/%20/g, "+")}!6i16`;
+export const GMAP_LINK = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(PLACE)}`;
 export const DIRECTIONS =
   "https://www.google.com/maps/dir/?api=1&destination=Dayananda%20Sagar%20College%20of%20Engineering%2C%20Bengaluru";
 

@@ -361,32 +361,69 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .venue__text { display: grid; gap: 1rem; justify-items: start; align-content: start; }
 .venue__name { margin-top: 1rem; font-weight: 800; font-stretch: 110%; font-size: clamp(1.4rem, 1.1rem + 1.4vw, 2.25rem); line-height: 1.08; letter-spacing: -0.015em; max-width: 16em; }
 .venue .btn { margin-top: 0.75rem; }
-.vmap { margin: 0; width: 100%; justify-self: end; background: var(--ink); color: var(--paper); }
+/* Venue map in maptoposter's warm_beige palette. */
+.vmap {
+  --wb-bg: #f5f0e8;
+  --wb-text: #6b5b4f;
+  --wb-water: #ddd5c8;
+  --wb-parks: #e8e4d8;
+  --wb-motorway: #8b7355;
+  --wb-primary: #a08b70;
+  --wb-secondary: #b5a48e;
+  --wb-tertiary: #c9bbaa;
+  --wb-residential: #d9cfc2;
+  --band-h: clamp(22px, 4.4vw, 40px);
+  margin: 0;
+  width: 100%;
+  justify-self: end;
+  background: var(--wb-bg);
+  color: var(--wb-text);
+  box-shadow: 0 0 0 2px var(--ink);
+}
 .vmap__frame { position: relative; }
 .vmap svg { display: block; width: 100%; height: auto; aspect-ratio: 1; }
-.vmap__ground { fill: var(--ink); }
-.vmap__green { fill: url(#vmap-hatch); }
-.vmap__hatch { stroke: #3d3823; stroke-width: 2; }
-.vmap__water { fill: #2a2617; stroke: #4a4430; stroke-width: 1; }
-.vmap__paths { fill: none; stroke: #4a4430; stroke-width: 0.7; }
-.vmap__minor { fill: none; stroke: #8a8366; stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; }
-.vmap__rail { fill: none; stroke: #8a8366; stroke-width: 1.4; stroke-dasharray: 6 4; }
-.vmap__mid { fill: none; stroke: var(--paper); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.vmap__major { fill: none; stroke: var(--y); stroke-width: 3.6; stroke-linecap: round; stroke-linejoin: round; }
-.vmap__campus { fill: rgba(255, 212, 0, 0.22); stroke: var(--y); stroke-width: 2; }
-.vmap__ring circle { fill: none; stroke: var(--y); stroke-width: 1.2; stroke-dasharray: 2 6; opacity: 0.7; }
-.vmap__ring text { fill: var(--y); font-family: var(--mono); font-size: 26px; font-weight: 600; paint-order: stroke; stroke: var(--ink); stroke-width: 8px; }
-.vmap__pin rect { fill: var(--y); }
-.vmap__pin ellipse { fill: var(--ink); }
-.vmap__ping { fill: none; stroke: var(--y); stroke-width: 2; transform-box: fill-box; transform-origin: center; animation: vmap-ping 2.4s var(--out) infinite; }
-@keyframes vmap-ping { from { transform: scale(1); opacity: 0.9; } to { transform: scale(4.5); opacity: 0; } }
-.vmap__label { position: absolute; left: calc(50% + 1.5rem); top: 50%; transform: translateY(-50%); padding: 0.2em 0.35em; background: var(--ink); font-weight: 900; font-stretch: 125%; font-size: clamp(1.1rem, 3.4vw, 1.75rem); line-height: 1; letter-spacing: -0.01em; color: var(--y); pointer-events: none; }
-.vmap__cap { display: grid; grid-template-columns: 1fr auto; gap: 0.35rem 1rem; align-items: baseline; padding: 1rem 1.1rem 1.1rem; border-top: 2px solid var(--y); }
-.vmap__city { font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(1.5rem, 1rem + 2.4vw, 2.6rem); line-height: 1; letter-spacing: 0.06em; }
-.vmap__coords { font-family: var(--mono); font-size: 0.75rem; font-weight: 600; color: var(--y); white-space: nowrap; }
-.vmap__credit { grid-column: 1 / -1; font-size: 0.75rem; color: var(--on-ink-2); }
+.vmap__ground { fill: var(--wb-bg); }
+.vmap__green { fill: var(--wb-parks); }
+.vmap__water { fill: var(--wb-water); stroke: none; }
+.vmap__paths { fill: none; stroke: var(--wb-residential); stroke-width: 0.6; opacity: 0.7; }
+.vmap__minor { fill: none; stroke: var(--wb-residential); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
+.vmap__rail { fill: none; stroke: var(--wb-tertiary); stroke-width: 1.4; stroke-dasharray: 6 4; }
+.vmap__mid { fill: none; stroke: var(--wb-secondary); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.vmap__major { fill: none; stroke: var(--wb-motorway); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.vmap__campus { fill: rgba(255, 212, 0, 0.45); stroke: var(--wb-motorway); stroke-width: 1.5; }
+.vmap__ring circle { fill: none; stroke: var(--wb-text); stroke-width: 1.2; stroke-dasharray: 2 6; opacity: 0.6; }
+.vmap__ring text { fill: var(--wb-text); font-family: var(--mono); font-size: 24px; font-weight: 600; paint-order: stroke; stroke: var(--wb-bg); stroke-width: 8px; }
+.vmap__pin rect { fill: var(--ink); }
+.vmap__ping { fill: none; stroke: var(--ink); stroke-width: 2; transform-box: fill-box; transform-origin: center; animation: vmap-ping 2.4s var(--out) infinite; }
+@keyframes vmap-ping { from { transform: scale(1); opacity: 0.8; } to { transform: scale(5); opacity: 0; } }
+
+/* The miniature SANDBOX band sits above the venue point, on a short stem. */
+.vmap__band { position: absolute; left: 50%; bottom: calc(50% + var(--band-h) * 0.7); translate: -50% 0; display: grid; justify-items: center; transform-origin: 50% 100%; pointer-events: auto; }
+.vmap__band .strip { margin-inline: 0; height: var(--band-h); box-shadow: 0 0 0 2px var(--wb-bg); }
+.vmap__band .strip__track { flex: none; container-type: normal; width: calc(var(--band-h) * 6.36); }
+.vmap__band[hidden] { display: none; }
+.vmap__band:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
+@media (hover: hover) { .vmap__band { transition: scale 0.3s var(--out); } .vmap__band:hover { scale: 1.06; } }
+.vmap__band .wm { height: var(--band-h); width: calc(var(--band-h) * 6.36); }
+.vmap__stem { position: absolute; top: 100%; left: 50%; width: 2px; height: calc(var(--band-h) * 0.7 - 6px); background: var(--ink); }
+.vmap__fade { position: absolute; inset: auto 0 0; height: 18%; background: linear-gradient(to bottom, transparent, var(--wb-bg)); pointer-events: none; }
+
+/* Caption set like a maptoposter print: spaced capitals, a rule, coordinates. */
+.vmap__cap { display: grid; justify-items: center; gap: 0.5rem; padding: 0.5rem 1rem 1.5rem; text-align: center; }
+.vmap__city { font-weight: 800; font-stretch: 125%; text-transform: uppercase; font-size: clamp(1.4rem, 1rem + 2.2vw, 2.5rem); line-height: 1; letter-spacing: 0.32em; margin-right: -0.32em; }
+.vmap__rule { width: 3.5rem; height: 2px; background: var(--wb-text); margin-block: 0.2rem; }
+.vmap__country { font-weight: 700; font-stretch: 112%; text-transform: uppercase; font-size: 0.8125rem; letter-spacing: 0.3em; margin-right: -0.3em; }
+.vmap__coords { font-family: var(--mono); font-size: 0.75rem; font-weight: 600; }
+.vmap__credit { font-size: 0.6875rem; opacity: 0.9; }
+.vmap__open { margin-top: 0.25rem; font-weight: 700; font-size: 0.875rem; color: var(--ink); text-underline-offset: 0.25em; text-decoration-thickness: 2px; }
+.vmap__switch { position: absolute; top: 0.75rem; left: 0.75rem; z-index: 3; display: inline-flex; background: var(--wb-bg); box-shadow: inset 0 0 0 2px var(--ink); }
+.vmap { position: relative; }
+.vmap__switch button { position: relative; min-height: 2.5rem; padding: 0 0.85rem; font-weight: 800; font-stretch: 112%; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink); touch-action: manipulation; }
+.vmap__switch button > span:last-child { position: relative; z-index: 1; transition: color 0.2s; }
+.vmap__switch button[aria-pressed="true"] > span:last-child { color: var(--y); }
+.vmap__switch-fill { position: absolute; inset: 0; background: var(--ink); }
+.vmap__gmap { position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; border: 0; background: var(--wb-bg); filter: sepia(0.35) saturate(0.85); }
 .vmap__credit a { color: inherit; text-underline-offset: 0.2em; }
-@media (max-width: 30rem) { .vmap__cap { grid-template-columns: 1fr; } }
 @media (min-width: 56rem) { .venue { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); align-items: center; column-gap: 3rem; } .venue .title { font-size: clamp(2.3rem, 4.6vw, 4.75rem); } }
 
 /* ---- FAQ ---- */
