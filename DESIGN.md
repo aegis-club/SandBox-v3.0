@@ -383,7 +383,21 @@ The SANDBOX wordmark is an SVG, not a font.
 Each of the seven letters is a solid box in the strip foreground colour.
 Carves in the strip background colour cut the letter out of the box.
 The O is one ellipse, tilted 32 degrees.
-The header brand mark and the favicon reuse this box and this ellipse.
+
+### Logo: the SBv3 monogram
+
+The SBv3 monogram is the SandBox logo.
+It carves S, B, v and 3 from four 47-unit boxes on a 100-unit grid with a 6-unit gap.
+The top row reads S B, and the bottom row reads v 3.
+The carves follow the wordmark's grammar: bars with rounded ends, triangles, and notches.
+The source lives in `src/components/Mark.tsx`.
+
+- **Lockup:** The header shows the monogram, then the carved SANDBOX wordmark, then "v3.0" in Martian Mono.
+- **Favicon:** `public/favicon.svg` draws the monogram in ink on a yellow square.
+- **Colours:** The boxes take the foreground colour, and the carves take the ground colour behind the mark.
+- **Small screens:** Below 21.5rem the header drops the wordmark and keeps the monogram.
+- **Next edition:** Change the 3 cell to the new edition number.
+- **Alternatives:** `logo-lab.html` keeps the other letter marks and six symbol marks for later use.
 
 - **Sealed state:** Every carve scales to 0, so the letter is a solid box.
 - **Open state:** Every carve scales to 1 from its own origin.
@@ -418,7 +432,7 @@ The pillars, the rules, the sponsor tiers, the phases, and the FAQ use this patt
 
 - **Header:** Yellow fill with a 2px ink bottom rule. The header holds the brand mark, the links, and a small ink button.
 - **Links:** Weight 600 at 0.9375rem. A 2px ink underline draws from the left on hover.
-- **Brand mark:** An ink box with a tilted yellow ellipse. The ellipse rotates 180 degrees on hover.
+- **Brand:** The SBv3 monogram and the carved wordmark, as described under "Logo".
 - **Phone menu:** A full-screen ink panel wipes down from the header. Menu links use the display cut in yellow, with ink-line rules between links.
 
 ### Loop words
@@ -427,11 +441,13 @@ Four words stack as a ruled list: Build, Break, Experiment, Repeat.
 A word at rest is an outline at width 62.
 The active word fills yellow and stretches to width 125.
 
-### Venue plot
+### Venue map
 
-A square yellow panel with a white grid and a 2px ink inset border.
-Two ink lines cross at the venue, and an ink box marks the spot.
-Mono coordinates label the lines.
+A square poster map of the streets around DSCE, built from OpenStreetMap data by `scripts/build-venue-map.py`.
+The map uses maptoposter's warm_beige palette, which is the one place the site leaves the three-ink rule.
+A miniature SANDBOX band marks the venue and links to Google Maps.
+A Poster / Google Maps switch swaps in the live Google embed.
+The caption sets the city in spaced capitals over a short rule, the country, and the coordinates.
 
 ## Do's and Don'ts
 
@@ -651,6 +667,8 @@ Two phrase strips replace the hazard tape.
 | 2026-11-26 | A custom SANDBOX wordmark replaces a generic headline | User requirement |
 | 2026-11-26 | The world moved from the dark Carbon canvas to a yellow poster world | INSPO-01 and the user's yellow requirement |
 | 2026-11-26 | Plain CSS and Motion replace Tailwind and GSAP | The build needed neither library |
+| 2026-11-26 | The venue map uses maptoposter's warm_beige palette | User choice |
+| 2026-11-26 | SBv3 is the logo, paired with the carved wordmark in the header | User choice from the logo lab |
 
 ## 14. Open Questions
 
