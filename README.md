@@ -69,7 +69,8 @@ To test on a phone on the same Wi-Fi network, run `npx vite --host` and open the
 | `npm run dev` | Starts the dev server with hot reload. |
 | `npm run build` | Type-checks the code, then builds the site into `dist/`. |
 | `npm run preview` | Serves the built site from `dist/`. |
-| `npm run ship` | Builds, pushes `main` to GitHub, and deploys to Vercel production. |
+| `npm run ship` | Builds, then pushes `main` to GitHub. Vercel deploys the push to production. |
+| `npm run deploy:manual` | Deploys the local folder to Vercel production. Use only if GitHub deploys fail. |
 
 <br />
 
@@ -165,10 +166,12 @@ The public Overpass servers can be slow. The script tries three mirrors and retr
 
 ### Ship a change
 
-The Vercel Hobby plan cannot link a private organisation repository. Each change is pushed and deployed as two separate steps.
+Vercel is connected to this repository.
+Every push to `main` deploys to production, and every pull request gets its own preview link.
 
-1. Commit the change on `main`.
-2. Run `npm run ship`.
+1. Create a branch and commit your change.
+2. Open a pull request, and check the preview link that Vercel posts on it.
+3. Merge the pull request into `main`. Vercel deploys it to https://sandbox-v3.vercel.app.
 
 <br />
 
