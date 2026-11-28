@@ -32,8 +32,14 @@ function Film({ frames, edition, dir }: { frames: string[]; edition: string; dir
   }, [reduce]);
 
   return (
-    <div className={`film${wide ? " film--driven" : ""}`} ref={ref}>
-      <motion.ol className="film__run" ref={run} style={wide ? { x } : undefined} aria-label={`${edition} photos`}>
+    <div
+      className={`film${wide ? " film--driven" : ""}`}
+      ref={ref}
+      role="region"
+      aria-label={`${edition} photos`}
+      tabIndex={wide ? undefined : 0}
+    >
+      <motion.ol className="film__run" ref={run} style={wide ? { x } : undefined}>
         {frames.map((f, i) => (
           <li key={f} className="frame">
             <div className="frame__ph" role="img" aria-label={`Photo placeholder: ${f}`}>
@@ -72,15 +78,17 @@ export function Archive() {
             </h3>
             <p className="edition-row__year">{e.year}</p>
             <p className="edition-row__line">{e.line}</p>
-            <dl className="edition-row__stats">
-              {e.stats.map((s) => (
-                <div key={s.k}>
-                  <dt>{s.k}</dt>
-                  <dd>{s.v}</dd>
-                </div>
-              ))}
+            <div className="edition-row__stats">
+              <dl>
+                {e.stats.map((s) => (
+                  <div key={s.k}>
+                    <dt>{s.k}</dt>
+                    <dd>{s.v}</dd>
+                  </div>
+                ))}
+              </dl>
               <p className="edition-row__sample">Sample figures</p>
-            </dl>
+            </div>
           </div>
           <Film frames={e.frames} edition={e.name} dir={i % 2 ? -1 : 1} />
         </article>

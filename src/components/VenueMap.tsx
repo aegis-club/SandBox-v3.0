@@ -106,7 +106,6 @@ export function VenueMap() {
           href={GMAP_LINK}
           target="_blank"
           rel="noreferrer"
-          aria-label="Open DSCE, Bengaluru in Google Maps (opens in a new tab)"
           hidden={view === "google"}
           className="vmap__band"
           initial={reduce ? false : { scaleX: 0 }}
@@ -118,6 +117,7 @@ export function VenueMap() {
             <Wordmark delay={0} />
           </StripShell>
           <span className="vmap__stem" aria-hidden="true" />
+          <span className="sr">Open DSCE, Bengaluru in Google Maps (opens in a new tab)</span>
         </motion.a>
         {view === "poster" && <div className="vmap__fade" aria-hidden="true" />}
       </div>

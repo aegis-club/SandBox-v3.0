@@ -1,0 +1,89 @@
+name: CI
+
+# Runs every check on each pull request into main, and again on main itself.
+# Branch protection makes the "checks" and "integrity" jobs required before
+# any merge, and Vercel deploys only main, so unchecked code never reaches
+# production.
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  integrity:
+    name: integrity
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Check the changes in this pull request
+        run: node scripts/pr-integrity.mjs "origin/${{ github.base_ref }}"
+
+      - name: Install dependencies exactly as locked
+        run: npm ci --ignore-scripts
+
+      - name: Verify package signatures
+        run: npm audit signatures
+
+      - name: Block known high-severity vulnerabilities in site dependencies
+        run: npm audit --omit=dev --audit-level=high
+
+  checks:
+    name: checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check the site and the tests
+        run: npm run typecheck
+
+      - name: Unit and structure tests
+        run: npm run test:unit
+
+      - name: Production build
+        run: npx vite build
+
+      - name: Size budget
+        run: npm run budget
+
+      - name: Install the test browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Browser tests on desktop, tablet, and phones
+        run: npm run test:e2e
+
+      - name: Upload the browser test report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14
