@@ -182,7 +182,7 @@ function Live({ now }: { now: number }) {
         </div>
         <div className="feed">
           <p className="board__k">Announcements</p>
-          <ul aria-live="polite">
+          <ul aria-live="polite" aria-label="Announcements" tabIndex={0}>
             <AnimatePresence initial={false}>
               {feed.map((a) => (
                 <motion.li

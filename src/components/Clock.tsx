@@ -8,6 +8,19 @@ const HOUR = 3_600_000;
 export const START = Date.parse(EVENT.start);
 export const END = START + EVENT.hours * HOUR;
 
+/* Which part of the event a moment falls in. */
+export function stageAt(now: number): Stage {
+  return now < START ? "before" : now < END ? "live" : "after";
+}
+
+/* The moment each preview mode jumps to. "real" keeps the current time. */
+export function previewTarget(m: Mode, at: number): number {
+  if (m === "live") return START + 7.5 * HOUR;
+  if (m === "after") return END + 2 * HOUR;
+  if (m === "before") return START - (2 * 24 + 5) * HOUR - 17 * 60_000;
+  return at;
+}
+
 type Clock = { now: number; stage: Stage; mode: Mode; setMode: (m: Mode) => void };
 const Ctx = createContext<Clock | null>(null);
 
@@ -25,16 +38,14 @@ export function ClockProvider({ children }: { children: ReactNode }) {
 
   const setMode = (m: Mode) => {
     const at = Date.now();
-    const to = m === "live" ? START + 7.5 * HOUR : m === "after" ? END + 2 * HOUR : m === "before" ? START - (2 * 24 + 5) * HOUR - 17 * 60_000 : at;
-    anchor.current = { at, to };
+    anchor.current = { at, to: previewTarget(m, at) };
     setModeState(m);
     setTick(at);
   };
 
   const value = useMemo<Clock>(() => {
     const now = mode === "real" ? tick : anchor.current.to + (tick - anchor.current.at);
-    const stage: Stage = now < START ? "before" : now < END ? "live" : "after";
-    return { now, stage, mode, setMode };
+    return { now, stage: stageAt(now), mode, setMode };
   }, [tick, mode]);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

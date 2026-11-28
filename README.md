@@ -69,8 +69,13 @@ To test on a phone on the same Wi-Fi network, run `npx vite --host` and open the
 | `npm run dev` | Starts the dev server with hot reload. |
 | `npm run build` | Type-checks the code, then builds the site into `dist/`. |
 | `npm run preview` | Serves the built site from `dist/`. |
-| `npm run ship` | Builds, then pushes `main` to GitHub. Vercel deploys the push to production. |
-| `npm run deploy:manual` | Deploys the local folder to Vercel production. Use only if GitHub deploys fail. |
+| `npm run typecheck` | Type-checks the site and the tests. |
+| `npm test` | Runs the unit and structure tests. |
+| `npm run test:e2e` | Runs the browser tests on desktop, tablet, and phone sizes. Build first. |
+| `npm run budget` | Checks the built files against their size budgets. Build first. |
+| `npm run integrity` | Checks your branch's changes against `origin/main`, as the integrity job does. Commit first. |
+| `npm run ci` | Runs every check that CI runs, in the same order. |
+| `npm run deploy:manual` | Deploys the local folder to Vercel production. For emergencies only. |
 
 <br />
 
@@ -166,12 +171,51 @@ The public Overpass servers can be slow. The script tries three mirrors and retr
 
 ### Ship a change
 
-Vercel is connected to this repository.
-Every push to `main` deploys to production, and every pull request gets its own preview link.
+`main` is protected. Nobody, including the org owners, can push to it directly.
 
 1. Create a branch and commit your change.
-2. Open a pull request, and check the preview link that Vercel posts on it.
-3. Merge the pull request into `main`. Vercel deploys it to https://sandbox-v3.vercel.app.
+2. Run `npm run ci` to catch problems before CI does.
+3. Push the branch and open a pull request into `main`.
+4. Wait for the `integrity` and `checks` jobs to pass. Both must pass before the pull request can merge.
+5. Ask an org owner to review. One owner's approval is required, and you cannot approve your own pull request.
+6. Merge. Vercel deploys `main` to https://sandbox-v3.vercel.app.
+
+Vercel deploys only `main`. Branches and pull requests never reach Vercel, so unchecked code is never published.
+
+## Tests and checks
+
+CI runs on every pull request and on `main` (`.github/workflows/ci.yml`). It has two jobs.
+
+### The `integrity` job: the pull request's own changes
+
+It runs on pull requests only, and looks only at the files and lines the pull request changes.
+
+| Rule | Fails when |
+|---|---|
+| Forbidden files | The pull request adds an `.env` file, a private key, or a generated folder such as `dist/` or `node_modules/` |
+| Large files | A changed file is over 1 MB |
+| Secrets | An added line looks like a private key, an API key, a token, a JWT, or a hard-coded password |
+| Leftovers | An added line has `test.only`, `debugger`, or `console.log` in site code |
+| Tests | Site code in `src/` changed, but nothing in `tests/` changed. An owner can add the `tests-not-needed` label for a change that truly needs no test. |
+| Lockfile | Dependencies in `package.json` changed, but `package-lock.json` did not |
+| Description | The pull request description is empty or very short |
+| Dependencies | `npm ci` cannot install exactly what the lockfile says, a package signature is invalid, or a site dependency has a known high-severity vulnerability |
+
+It also lists, for reviewers, anything that needs a careful look: new dependencies, changed npm scripts, changed CI or deploy files, deleted tests, and removed assertions.
+
+### The `checks` job: the whole site
+
+| Check | What it protects |
+|---|---|
+| Type-check | The site and the tests compile in strict TypeScript. |
+| Data tests | Eight territories, nine journey phases in order, a 24-hour live schedule with no gaps, valid links. |
+| Structure tests | The section order, one h1, landmarks, working in-page links, no duplicate ids, safe external links, accessible names. |
+| Interaction tests | Territory tabs with mouse and keyboard, the FAQ, the live board stages, and the palette links. |
+| Asset tests | The venue map data and its OpenStreetMap credit, the stylesheet's tokens and palettes, the favicon and share image. |
+| Size budget | Total JavaScript, CSS, the largest file, and the map data stay under their limits. |
+| Browser tests | On 1440 px, 768 px, 412 px, and 360 px screens: no errors, no failed requests, no sideways scroll, every section drawn, working navigation, the map loads, reduced motion, and no serious accessibility problems. |
+
+Vercel also runs the unit and structure tests before every production build, so a failing test stops the deploy.
 
 <br />
 
